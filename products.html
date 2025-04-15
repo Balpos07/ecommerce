@@ -1,18 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopEasy - Home</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
+  <head>
+    <!-- Same head as index.html -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* Products Page Specific Styles */
+      .products-page {
+        padding: 40px 0;
+      }
+
+      .products-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      .products-header h1 {
+        font-size: 32px;
+        margin-bottom: 15px;
+      }
+
+      .filter-controls {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .filter-controls select {
+        padding: 10px 15px;
+        border: 1px solid var(--light-color);
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: var(--white);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .filter-controls select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+      }
+
+      /* Product Card Enhancements */
+      .product-card {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 1;
+      }
+
+      .product-actions {
+        position: absolute;
+        bottom: -50px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.9);
+        transition: var(--transition);
+      }
+
+      .product-card:hover .product-actions {
+        bottom: 0;
+      }
+
+      .action-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .action-btn:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-3px);
+      }
+
+      /* Pagination Styles */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+        gap: 10px;
+      }
+
+      .pagination-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        border: 1px solid var(--light-color);
+        background-color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .pagination-btn.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .pagination-btn:hover:not(.active) {
+        background-color: var(--light-color);
+      }
+
+      /* Loading State */
+      .loading-state {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--primary-color);
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* No Products Found State */
+      .no-products {
+        text-align: center;
+        padding: 50px 0;
+        grid-column: 1 / -1;
+      }
+
+      .no-products h3 {
+        margin-bottom: 15px;
+        color: var(--dark-color);
+      }
+
+      /* Category Filter Chips (Alternative UI) */
+      .category-chips {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .chip {
+        padding: 8px 16px;
+        background-color: var(--light-color);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 14px;
+      }
+
+      .chip.active {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .chip:hover:not(.active) {
+        background-color: #d5dbdb;
+      }
+      /* Mobile Styles for Products Page */
+      @media (max-width: 767px) {
+        .products-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .filter-controls {
+          width: 100%;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .filter-controls select {
+          width: 100%;
+        }
+
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .product-actions {
+          position: static;
+          background-color: transparent;
+          padding: 10px 0;
+          justify-content: flex-start;
+        }
+
+        .product-card:hover .product-actions {
+          transform: none;
+        }
+      }
+
+      /* Tablet Styles for Products Page */
+      @media (min-width: 768px) and (max-width: 1023px) {
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .filter-controls {
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
     <header>
         <div class="container">
             <div class="logo">
-                <a href="index.html">ShopEasy</a>
+                <a href="index.html">MediaShop</a>
             </div>
             <nav>
                 <ul>
@@ -29,29 +261,57 @@
     </header>
 
     <main class="products-page">
-        <div class="container">
-            <div class="products-header">
-                <h1>Our Products</h1>
-                <div class="filter-controls">
-                    <select id="category-filter">
-                        <option value="all">All Categories</option>
-                        <option value="electronics">Electronics</option>
-                        <option value="clothing">Clothing</option>
-                        <option value="home">Home & Garden</option>
-                    </select>
-                    <select id="sort-by">
-                        <option value="default">Sort By</option>
-                        <option value="price-asc">Price: Low to High</option>
-                        <option value="price-desc">Price: High to Low</option>
-                        <option value="name-asc">Name: A-Z</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="products-grid" id="all-products">
-                <!-- Products will be loaded dynamically -->
-            </div>
+      <div class="container">
+        <div class="products-header">
+          <h1>Our Products</h1>
+
+          <!-- Category Chips (Alternative to dropdown) -->
+          <div class="category-chips">
+            <div class="chip active" data-category="all">All</div>
+            <div class="chip" data-category="electronics">Electronics</div>
+            <div class="chip" data-category="clothing">Clothing</div>
+            <div class="chip" data-category="home">Home & Garden</div>
+          </div>
+
+          <!-- Filter Controls -->
+          <div class="filter-controls">
+            <select id="category-filter">
+              <option value="all">All Categories</option>
+              <option value="electronics">Electronics</option>
+              <option value="clothing">Clothing</option>
+              <option value="home">Home & Garden</option>
+            </select>
+            <select id="sort-by">
+              <option value="default">Sort By</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Name: A-Z</option>
+              <option value="rating-desc">Rating: High to Low</option>
+            </select>
+          </div>
         </div>
+
+        <!-- Loading State (Initially hidden) -->
+        <div class="loading-state hidden" id="loading-state">
+          <div class="loading-spinner"></div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="all-products">
+          <!-- Products will be loaded dynamically -->
+        </div>
+
+        <!-- No Products Found State (Initially hidden) -->
+        <div class="no-products hidden" id="no-products">
+          <h3>No products found</h3>
+          <p>Try adjusting your filters or search term</p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+          <!-- Pagination will be loaded dynamically -->
+        </div>
+      </div>
     </main>
 
     <!-- Same footer as index.html -->
@@ -59,15 +319,32 @@
     <script src="js/main.js"></script>
     <script src="js/products.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            loadAllProducts();
-            updateCartCount();
-            checkAuthStatus();
-            
-            // Setup filter event listeners
-            document.getElementById('category-filter').addEventListener('change', filterProducts);
-            document.getElementById('sort-by').addEventListener('change', sortProducts);
+      document.addEventListener("DOMContentLoaded", () => {
+        loadAllProducts();
+        updateCartCount();
+        checkAuthStatus();
+
+        // Setup filter event listeners
+        document
+          .getElementById("category-filter")
+          .addEventListener("change", filterProducts);
+        document
+          .getElementById("sort-by")
+          .addEventListener("change", sortProducts);
+
+        // Chip filter event listeners
+        document.querySelectorAll(".chip").forEach((chip) => {
+          chip.addEventListener("click", function () {
+            document
+              .querySelectorAll(".chip")
+              .forEach((c) => c.classList.remove("active"));
+            this.classList.add("active");
+            document.getElementById("category-filter").value =
+              this.dataset.category;
+            filterProducts();
+          });
         });
+      });
     </script>
-</body>
+  </body>
 </html>
