@@ -4,7 +4,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyBaP_tOf8UoALDfwOSnRc05RyyHq3SYMzQ",
     authDomain: "mediashop-1c505.firebaseapp.com",
     projectId: "mediashop-1c505",
-    storageBucket: "mediashop-1c505.firebasestorage.app",
+    // storageBucket: "mediashop-1c505.firebasestorage.app",
     messagingSenderId: "902470795591",
     appId: "1:902470795591:web:667b8f15e10377a8ab4c62"
 };
@@ -13,7 +13,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
+// const storage = firebase.storage();
 
 // Check Authentication Status
 function checkAuthStatus() {
